@@ -8,10 +8,16 @@ namespace GarageApplication.VehicleTypes
 {
     internal class Airplane : Vehicle
     {
-        public int NumberOfEngines { get; set; }
+        public int NumberOfEngines { get; }
         public Airplane(int registrationNumber, string color, int numberOfWheels, int numberOfEngines) : base(registrationNumber, color, numberOfWheels)
         {
             NumberOfEngines = numberOfEngines;
         }
+
+        public override Vehicle Clone()
+        {
+            return new Airplane(RegistrationNumber, Color, NumberOfWheels, NumberOfEngines);
+        }
+
     }
 }

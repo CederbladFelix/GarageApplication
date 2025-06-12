@@ -10,26 +10,45 @@ namespace GarageApplication
 {
     internal class Garage<T> : IEnumerable<T> where T : Vehicle
     {
-        private T[] _vehicles;
+        private T?[] _vehicles;
 
         public Garage(int capacity)
         {
             _vehicles = new T[capacity];
         }
 
-        public void ParkVehicle(Vehicle vehicle)
+        public bool ParkVehicle(T vehicle)
         {
-            
+            for (int i = 0; i < _vehicles.Length; i++)
+            {
+                if (_vehicles[i] == null)
+                {
+                    _vehicles[i] = vehicle;
+                    return true;
+                }
+            }
+            return false;
         }
 
-        public void ExitVehicle(Vehicle vehicle)
+        public bool UnparkVehicle(T vehicle)
         {
-
+            for (int i = 0; i < _vehicles.Length; i++)
+            {
+                if (_vehicles[i] != null && _vehicles[i]!.Equals(vehicle))
+                {
+                    _vehicles[i] = null;
+                    return true;
+                }
+            }
+            return false; 
         }
 
-        public string GetVehicles()
+
+        public IEnumerable<Vehicle> GetVehicles()
         {
-            return "";
+            return _vehicles
+                .Where(v => v != null)
+                .Select(v => v.Clone());
         }
 
         public IEnumerator<T> GetEnumerator()

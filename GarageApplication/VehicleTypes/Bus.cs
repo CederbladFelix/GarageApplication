@@ -8,10 +8,15 @@ namespace GarageApplication.VehicleTypes
 {
     internal class Bus : Vehicle
     {
-        public bool FuelType { get; set; }
+        public bool FuelType { get; }
         public Bus(int registrationNumber, string color, int numberOfWheels, bool fuelType) : base(registrationNumber, color, numberOfWheels)
         {
             FuelType = fuelType;
+        }
+
+        public override Vehicle Clone()
+        {
+            return new Bus(RegistrationNumber, Color, NumberOfWheels, FuelType);
         }
     }
 }

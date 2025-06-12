@@ -6,8 +6,7 @@ namespace GarageApplication
     {
         static void Main(string[] args)
         {
-            Garage<Vehicle> vehicles = new(10);
-            Console.WriteLine(vehicles);
+
         }
     }
 }
