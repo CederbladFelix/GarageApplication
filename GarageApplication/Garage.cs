@@ -11,15 +11,10 @@ namespace GarageApplication
     internal class Garage<T> : IEnumerable<T> where T : Vehicle
     {
         private T[] _vehicles;
-        public T[] Vehicles 
-        {           
-            get { return _vehicles; } 
-            private set { _vehicles = value; }
-        }
 
-        public Garage()
+        public Garage(int capacity)
         {
-            _vehicles = new T[10];
+            _vehicles = new T[capacity];
         }
 
         public void ParkVehicle(Vehicle vehicle)

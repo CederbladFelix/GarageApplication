@@ -9,7 +9,7 @@ namespace GarageApplication.VehicleTypes
 {
     internal abstract class Vehicle
     {
-        public int RegistrationNumber { get; set; } //Fixa unikt
+        public int RegistrationNumber { get; set; }
         public string Color { get; set; }
         public int NumberOfWheels { get; set; }
 
@@ -19,7 +19,5 @@ namespace GarageApplication.VehicleTypes
             Color = color;
             NumberOfWheels = numberOfWheels;
         }
-
-
     }
 }
