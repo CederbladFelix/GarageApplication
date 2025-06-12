@@ -19,6 +19,15 @@ namespace GarageApplication
 
         public bool ParkVehicle(T vehicle)
         {
+            foreach (var parkingSlot in _vehicles)
+            {
+                if (parkingSlot != null &&
+                    parkingSlot.RegistrationNumber == vehicle.RegistrationNumber)
+                {
+                    return false;
+                }
+            }
+
             for (int i = 0; i < _vehicles.Length; i++)
             {
                 if (_vehicles[i] == null)
