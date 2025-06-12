@@ -9,13 +9,14 @@ namespace GarageApplication.VehicleTypes
 {
     internal abstract class Vehicle : ICloneable
     {
+        private static int _nextRegNumber = 1;
         public int RegistrationNumber { get; }
         public string Color { get; }
         public int NumberOfWheels { get; }
 
-        protected Vehicle(int registrationNumber, string color, int numberOfWheels)
+        protected Vehicle(string color, int numberOfWheels)
         {
-            RegistrationNumber = registrationNumber;
+            RegistrationNumber = _nextRegNumber++;
             Color = color;
             NumberOfWheels = numberOfWheels;
         }

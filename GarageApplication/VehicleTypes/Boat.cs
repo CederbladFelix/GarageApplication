@@ -9,14 +9,14 @@ namespace GarageApplication.VehicleTypes
     internal class Boat : Vehicle
     {
         public int Length { get; }
-        public Boat(int registrationNumber, string color, int numberOfWheels, int length) : base(registrationNumber, color, numberOfWheels)
+        public Boat(string color, int numberOfWheels, int length) : base(color, numberOfWheels)
         {
             Length = length;
         }
 
         public override Vehicle Clone()
         {
-            return new Boat(RegistrationNumber, Color, NumberOfWheels, Length);
+            return new Boat(Color, NumberOfWheels, Length);
         }
     }
 }

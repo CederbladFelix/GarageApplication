@@ -34,20 +34,20 @@ namespace GarageApplication
         {
             for (int i = 0; i < _vehicles.Length; i++)
             {
-                if (_vehicles[i] != null && _vehicles[i]!.Equals(vehicle))
+                if (_vehicles[i] is T parkedVehicle &&
+                    parkedVehicle.RegistrationNumber == vehicle.RegistrationNumber)
                 {
                     _vehicles[i] = null;
                     return true;
                 }
             }
-            return false; 
+            return false;
         }
-
 
         public IEnumerable<Vehicle> GetVehicles()
         {
             return _vehicles
-                .Where(v => v != null)
+                .OfType<T>()
                 .Select(v => v.Clone());
         }
 
@@ -55,7 +55,8 @@ namespace GarageApplication
         {
             foreach (var item in _vehicles)
             {
-                yield return item;
+                if (item is T vehicle)
+                    yield return vehicle;
             }
         }
 
