@@ -5,16 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GarageApplication.VehicleTypes
+namespace GarageApplication.Vehicles
 {
     internal abstract class Vehicle : ICloneable
     {
         private static int _nextRegNumber = 1;
+        public abstract VehicleType Type { get; }
         public int RegistrationNumber { get; }
-        public string Color { get; }
+        public VehicleColor Color { get; }
         public int NumberOfWheels { get; }
 
-        protected Vehicle(string color, int numberOfWheels)
+        protected Vehicle(VehicleColor color, int numberOfWheels)
         {
             RegistrationNumber = _nextRegNumber++;
             Color = color;
@@ -27,5 +28,10 @@ namespace GarageApplication.VehicleTypes
         {
             return Clone();
         }
+        public override string ToString()
+        {
+            return $"Type: {this.GetType().Name}, Registration number: {RegistrationNumber}, Color: {Color}";
+        }
+
     }
 }

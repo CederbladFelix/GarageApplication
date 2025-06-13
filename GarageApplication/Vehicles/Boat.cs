@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GarageApplication.VehicleTypes
+namespace GarageApplication.Vehicles
 {
     internal class Boat : Vehicle
     {
         public int Length { get; }
-        public Boat(string color, int numberOfWheels, int length) : base(color, numberOfWheels)
+        public Boat(VehicleColor color, int numberOfWheels, int length) : base(color, numberOfWheels)
         {
             Length = length;
         }

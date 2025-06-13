@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GarageApplication.VehicleTypes
+namespace GarageApplication.Vehicles
 {
     internal class Bus : Vehicle
     {
-        public bool FuelType { get; }
-        public Bus(string color, int numberOfWheels, bool fuelType) : base(color, numberOfWheels)
+        public FuelType FuelType { get; }
+        public Bus(VehicleColor color, int numberOfWheels, FuelType fuelType) : base(color, numberOfWheels)
         {
             FuelType = fuelType;
         }

@@ -1,7 +1,9 @@
-﻿using GarageApplication.VehicleTypes;
+﻿using GarageApplication.Vehicles;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,22 +13,33 @@ namespace GarageApplication
     internal class Garage<T> : IEnumerable<T> where T : Vehicle
     {
         private T?[] _vehicles;
+        public int Capacity => _vehicles.Length;
 
-        public Garage(int capacity)
+
+        public Garage(int capacity, T[]? vehicles = null)
         {
+            if (capacity <= 0)
+                throw new ArgumentException("Capacity must be greater than 0.");
+
             _vehicles = new T[capacity];
+
+            if (vehicles != null)
+            {
+                if (vehicles.Length > capacity)
+                    throw new ArgumentException("Provided vehicles exceed garage capacity.");
+
+                for (int i = 0; i < vehicles.Length; i++)
+                {
+                    _vehicles[i] = vehicles[i];
+                }
+            }
         }
 
         public bool ParkVehicle(T vehicle)
         {
-            foreach (var parkingSlot in _vehicles)
-            {
-                if (parkingSlot != null &&
-                    parkingSlot.RegistrationNumber == vehicle.RegistrationNumber)
-                {
-                    return false;
-                }
-            }
+            if (_vehicles.Any(v => v?.RegistrationNumber == vehicle.RegistrationNumber))
+                return false;
+
 
             for (int i = 0; i < _vehicles.Length; i++)
             {
@@ -53,11 +66,37 @@ namespace GarageApplication
             return false;
         }
 
-        public IEnumerable<Vehicle> GetVehicles()
+        public IEnumerable<Vehicle> GetParkedVehicles()
         {
             return _vehicles
                 .OfType<T>()
                 .Select(v => v.Clone());
+        }
+
+        public Dictionary<string, int> GetCountByVehicleType()
+        {
+            return GetParkedVehicles()
+                .GroupBy(v => v.GetType().Name)
+                .ToDictionary(v => v.Key, v => v.Count());
+        }
+
+        public Vehicle? GetVehicleByRegistration(int registrationNumber)
+        {
+            return _vehicles.FirstOrDefault(v => v?.RegistrationNumber == registrationNumber);
+        }
+
+        public IEnumerable<T>? GetVehiclesByProperty(
+            VehicleType? type = null,
+            VehicleColor? color = null,
+            int? numberOfWheels = null)
+        {
+            return _vehicles
+                .Where(v =>
+                    v != null &&
+                    (type == null || v.Type == type) && 
+                    (color == null || v.Color == color) &&
+                    (numberOfWheels == null || v.NumberOfWheels == numberOfWheels))
+                .Cast<T>();
         }
 
         public IEnumerator<T> GetEnumerator()
