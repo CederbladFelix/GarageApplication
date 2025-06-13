@@ -13,12 +13,11 @@ namespace GarageApplication
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton<UI>();
-                    services.AddSingleton<Handler>();
                     services.AddSingleton<Manager>();
                 })
                 .UseConsoleLifetime()
                 .Build();
-            host.Services.GetRequiredService<Manager>().Run();
+            host.Services.GetRequiredService<Manager>().Application();
 
 
         }

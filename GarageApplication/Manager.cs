@@ -9,17 +9,33 @@ namespace GarageApplication
 {
     internal class Manager
     {
-        public Handler Handler { get; set; }
+        public Handler? Handler { get; set; }
         public UI UI { get; set; }
-        public Manager(Handler handler, UI ui)
+        public Manager(UI ui)
         {
-            Handler = handler;
-            this.UI = ui;
+            UI = ui;
         }
-        public void Run()
+        public void Application()
         {
-            
+            Initialize();
+            Run();
+            Shutdown();
+
+        }
+        private void Initialize()
+        {
+            int garageSize = UI.AskForGarageSize();
+            Vehicle[]? vehicles = UI.AskForAlreadyParkedVehicles();
+            Handler = new Handler(garageSize);
+        }
+        private void Run()
+        {
+            //GetMainMenu();
         }
 
+        private void Shutdown()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

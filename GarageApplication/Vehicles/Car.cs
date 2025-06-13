@@ -14,9 +14,5 @@ namespace GarageApplication.Vehicles
             NumberOfSeats = numberOfSeats;
         }
 
-        public override Vehicle Clone()
-        {
-            return new Car(Color, NumberOfWheels, NumberOfSeats);
-        }
     }
 }

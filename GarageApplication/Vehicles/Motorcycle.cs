@@ -14,9 +14,5 @@ namespace GarageApplication.Vehicles
             CylinderVolume = cylinderVolume;
         }
 
-        public override Vehicle Clone()
-        {
-            return new Motorcycle(Color, NumberOfWheels, CylinderVolume);
-        }
     }
 }

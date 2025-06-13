@@ -66,19 +66,12 @@ namespace GarageApplication
             return false;
         }
 
-        public IEnumerable<Vehicle> GetParkedVehicles()
-        {
-            return _vehicles
-                .OfType<T>()
-                .Select(v => v.Clone());
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
             foreach (var item in _vehicles)
             {
-                if (item is T vehicle)
-                    yield return vehicle;
+                if (item != null)
+                    yield return item;
             }
         }
 

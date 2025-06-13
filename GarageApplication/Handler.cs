@@ -9,21 +9,22 @@ namespace GarageApplication
 {
     internal class Handler
     {
-        public Garage<Vehicle> Garage { get; set; }
+        private Garage<Vehicle> _garage { get; set; }
 
-        public Handler(Garage<Vehicle> garage)
+        public Handler(int capacity)
         {
-            Garage = garage;
+            _garage = new Garage<Vehicle>(capacity);
+
         }
 
         public Vehicle? GetVehicleByRegistration(int registrationNumber)
         {
-            return Garage.GetParkedVehicles().FirstOrDefault(v => v?.RegistrationNumber == registrationNumber);
+            return _garage.FirstOrDefault(v => v.RegistrationNumber == registrationNumber);
         }
 
         public Dictionary<string, int> GetCountByVehicleType()
         {
-            return Garage.GetParkedVehicles()
+            return _garage
                 .GroupBy(v => v.GetType().Name)
                 .ToDictionary(v => v.Key, v => v.Count());
         }
@@ -33,12 +34,11 @@ namespace GarageApplication
             VehicleColor? color = null,
             int? numberOfWheels = null)
         {
-            return Garage.GetParkedVehicles()
+            return _garage
                 .Where(v =>
                     (type == null || v.Type == type) &&
                     (color == null || v.Color == color) &&
-                    (numberOfWheels == null || v.NumberOfWheels == numberOfWheels))
-                .Cast<Vehicle>();
+                    (numberOfWheels == null || v.NumberOfWheels == numberOfWheels));
         }
     }
 }

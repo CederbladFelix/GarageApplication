@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace GarageApplication.Vehicles
 {
-    internal abstract class Vehicle : ICloneable
+    internal abstract class Vehicle
     {
         private static int _nextRegNumber = 1;
-        public abstract VehicleType Type { get; }
+        public VehicleType Type { get; }
         public int RegistrationNumber { get; }
         public VehicleColor Color { get; }
         public int NumberOfWheels { get; }
@@ -22,12 +22,6 @@ namespace GarageApplication.Vehicles
             NumberOfWheels = numberOfWheels;
         }
 
-        public abstract Vehicle Clone();
-
-        object ICloneable.Clone()
-        {
-            return Clone();
-        }
         public override string ToString()
         {
             return $"Type: {this.GetType().Name}, Registration number: {RegistrationNumber}, Color: {Color}";

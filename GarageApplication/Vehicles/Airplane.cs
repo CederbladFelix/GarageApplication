@@ -14,10 +14,6 @@ namespace GarageApplication.Vehicles
             NumberOfEngines = numberOfEngines;
         }
 
-        public override Vehicle Clone()
-        {
-            return new Airplane(Color, NumberOfWheels, NumberOfEngines);
-        }
 
     }
 }

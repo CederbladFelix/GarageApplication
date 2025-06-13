@@ -14,9 +14,6 @@ namespace GarageApplication.Vehicles
             FuelType = fuelType;
         }
 
-        public override Vehicle Clone()
-        {
-            return new Bus(Color, NumberOfWheels, FuelType);
-        }
+
     }
 }

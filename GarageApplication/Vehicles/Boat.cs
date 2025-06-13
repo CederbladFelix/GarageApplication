@@ -14,9 +14,5 @@ namespace GarageApplication.Vehicles
             Length = length;
         }
 
-        public override Vehicle Clone()
-        {
-            return new Boat(Color, NumberOfWheels, Length);
-        }
     }
 }
