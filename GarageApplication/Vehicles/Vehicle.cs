@@ -10,10 +10,10 @@ namespace GarageApplication.Vehicles
     internal abstract class Vehicle
     {
         private static int _nextRegNumber = 1;
-        public VehicleType Type { get; }
         public int RegistrationNumber { get; }
-        public VehicleColor Color { get; }
         public int NumberOfWheels { get; }
+        public VehicleType Type { get; }
+        public VehicleColor Color { get; }
 
         protected Vehicle(VehicleColor color, int numberOfWheels)
         {

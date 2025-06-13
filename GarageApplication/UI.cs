@@ -14,39 +14,13 @@ namespace GarageApplication
         {
 
             int numberOfParkedVehicles = UIService.GetValidInteger("How many vehicles are parked");
+            Vehicle[] vehicles = new Vehicle[numberOfParkedVehicles];
 
-            for(int i = 0; i < numberOfParkedVehicles; i++)
+            for (int i = 0; i < numberOfParkedVehicles; i++)
             {
-                VehicleType vehicleType = UIService.GetValidEnumValue<VehicleType>
-                    (
-                        "What kind of vehicle is it?\n" +
-                        "Choices:\n" +
-                        $"{VehicleType.Airplane}\n" +
-                        $"{VehicleType.Boat}\n" +
-                        $"{VehicleType.Bus}\n" +
-                        $"{VehicleType.Car}\n" +
-                        $"{VehicleType.Motorcycle}\n" +
-                        $"{VehicleType.Airplane}"
-                    );
-                VehicleColor vehicleColor = UIService.GetValidEnumValue<VehicleColor>
-                    (
-                        "What color is the vehicle?\n" +
-                        "Choices:\n" +
-                        $"{VehicleColor.Red}\n" +
-                        $"{VehicleColor.Blue}\n" +
-                        $"{VehicleColor.Black}\n" +
-                        $"{VehicleColor.White}\n" +
-                        $"{VehicleColor.Gray}\n" +
-                        $"{VehicleColor.Silver}\n" +
-                        $"{VehicleColor.Yellow}\n" +
-                        $"{VehicleColor.Orange}\n" +
-                        $"{VehicleColor.Brown}\n"
-                    );
-
-                int numberOfWheels = UIService.GetValidInteger("How many wheels doest the vehicle have?");
+                vehicles[i] = UIService.CreateVehicle()!;
             }
-
-            return null;
+            return vehicles;
         }
 
         internal int AskForGarageSize()
