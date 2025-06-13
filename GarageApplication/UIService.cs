@@ -65,7 +65,8 @@ namespace GarageApplication
 
         public static Vehicle? CreateVehicle()
         {
-            VehicleColor vehicleColor = UIService.GetValidEnumValue<VehicleColor>(
+            VehicleColor vehicleColor = UIService.GetValidEnumValue<VehicleColor>
+             (
                 "What color is the vehicle?\n" +
                 "Choices:\n" +
                 $"{VehicleColor.Red}\n" +
@@ -81,7 +82,8 @@ namespace GarageApplication
 
             int numberOfWheels = UIService.GetValidInteger("How many wheels does the vehicle have?");
 
-            VehicleType vehicleType = UIService.GetValidEnumValue<VehicleType>(
+            VehicleType vehicleType = UIService.GetValidEnumValue<VehicleType>
+            (
                 "What kind of vehicle is it?\n" +
                 "Choices:\n" +
                 $"{VehicleType.Airplane}\n" +
@@ -106,7 +108,8 @@ namespace GarageApplication
                     break;
 
                 case VehicleType.Bus:
-                    FuelType fuelType = UIService.GetValidEnumValue<FuelType>(
+                    FuelType fuelType = UIService.GetValidEnumValue<FuelType>
+                     (
                         "What fuel type does the bus have?\n" +
                         "Choices:\n" +
                         $"{FuelType.Petrol}\n" +
