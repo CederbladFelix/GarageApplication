@@ -1,4 +1,7 @@
 ﻿using GarageApplication.Vehicles;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace GarageApplication
 {
@@ -6,21 +9,16 @@ namespace GarageApplication
     {
         static void Main(string[] args)
         {
-            Garage<Vehicle> garage = new(10);
-            Airplane airplane = new(VehicleColor.Orange, 10, 10);
-            garage.ParkVehicle(airplane);
-            IEnumerable<Vehicle> vehicles = garage.GetParkedVehicles();
-            
-            foreach (var vehicle in vehicles)
-            {
-                Console.WriteLine(vehicle);
-            }
-
-            var vehicleTypeCount = garage.GetCountByVehicleType();
-            foreach (var item in vehicleTypeCount)
-            {
-                Console.WriteLine($"{item.Key}: {item.Value}");
-            }
+            var host = Host.CreateDefaultBuilder(args)
+                .ConfigureServices(services =>
+                {
+                    services.AddSingleton<UI>();
+                    services.AddSingleton<Handler>();
+                    services.AddSingleton<Manager>();
+                })
+                .UseConsoleLifetime()
+                .Build();
+            host.Services.GetRequiredService<Manager>().Run();
 
 
         }

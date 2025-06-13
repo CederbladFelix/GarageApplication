@@ -73,32 +73,6 @@ namespace GarageApplication
                 .Select(v => v.Clone());
         }
 
-        public Dictionary<string, int> GetCountByVehicleType()
-        {
-            return GetParkedVehicles()
-                .GroupBy(v => v.GetType().Name)
-                .ToDictionary(v => v.Key, v => v.Count());
-        }
-
-        public Vehicle? GetVehicleByRegistration(int registrationNumber)
-        {
-            return _vehicles.FirstOrDefault(v => v?.RegistrationNumber == registrationNumber);
-        }
-
-        public IEnumerable<T>? GetVehiclesByProperty(
-            VehicleType? type = null,
-            VehicleColor? color = null,
-            int? numberOfWheels = null)
-        {
-            return _vehicles
-                .Where(v =>
-                    v != null &&
-                    (type == null || v.Type == type) && 
-                    (color == null || v.Color == color) &&
-                    (numberOfWheels == null || v.NumberOfWheels == numberOfWheels))
-                .Cast<T>();
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
             foreach (var item in _vehicles)
