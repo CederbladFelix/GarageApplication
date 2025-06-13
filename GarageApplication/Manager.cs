@@ -26,11 +26,11 @@ namespace GarageApplication
         {
             int garageSize = UI.AskForGarageSize();
             Vehicle[]? vehicles = UI.AskForAlreadyParkedVehicles();
-            Handler = new Handler(garageSize);
+            Handler = new Handler(garageSize, vehicles);
         }
         private void Run()
         {
-            //GetMainMenu();
+            //UI.GetMainMenu();
         }
 
         private void Shutdown()

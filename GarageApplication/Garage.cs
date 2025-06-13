@@ -19,7 +19,7 @@ namespace GarageApplication
         public Garage(int capacity, T[]? vehicles = null)
         {
             if (capacity <= 0)
-                throw new ArgumentException("Capacity must be greater than 0.");
+                throw new ArgumentException("A garage needs space for vehicles, capacity must be greater than 0.");
 
             _vehicles = new T[capacity];
 

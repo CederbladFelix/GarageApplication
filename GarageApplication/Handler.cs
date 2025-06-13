@@ -11,10 +11,9 @@ namespace GarageApplication
     {
         private Garage<Vehicle> _garage { get; set; }
 
-        public Handler(int capacity)
+        public Handler(int capacity, Vehicle[]? vehicles)
         {
-            _garage = new Garage<Vehicle>(capacity);
-
+            _garage = new Garage<Vehicle>(capacity, vehicles);
         }
 
         public Vehicle? GetVehicleByRegistration(int registrationNumber)
