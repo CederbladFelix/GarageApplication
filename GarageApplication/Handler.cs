@@ -9,17 +9,22 @@ namespace GarageApplication
 {
     internal class Handler
     {
-        private Garage<Vehicle> _garage { get; set; }
+        private Garage<Vehicle> _garage;
+
+        public Garage<Vehicle> Garage {  get { return _garage; } }
 
         public Handler(int capacity, Vehicle[]? vehicles)
         {
             _garage = new Garage<Vehicle>(capacity, vehicles);
         }
 
-        public Vehicle? GetVehicleByRegistration(int registrationNumber)
+        public Vehicle? GetVehicleByRegistration(string registrationNumber)
         {
             return _garage.FirstOrDefault(v => v.RegistrationNumber == registrationNumber);
         }
+
+        public void ParkVehicle(Vehicle vehicle) => _garage.ParkVehicle(vehicle);
+        public void UnparkVehicle(Vehicle vehicle) => _garage.UnparkVehicle(vehicle);
 
         public Dictionary<string, int> GetCountByVehicleType()
         {

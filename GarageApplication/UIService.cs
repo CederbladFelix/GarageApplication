@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GarageApplication
@@ -65,35 +66,13 @@ namespace GarageApplication
 
         public static Vehicle? CreateVehicle()
         {
-            VehicleColor vehicleColor = UIService.GetValidEnumValue<VehicleColor>
-             (
-                "What color is the vehicle?\n" +
-                "Choices:\n" +
-                $"{VehicleColor.Red}\n" +
-                $"{VehicleColor.Blue}\n" +
-                $"{VehicleColor.Black}\n" +
-                $"{VehicleColor.White}\n" +
-                $"{VehicleColor.Gray}\n" +
-                $"{VehicleColor.Silver}\n" +
-                $"{VehicleColor.Yellow}\n" +
-                $"{VehicleColor.Orange}\n" +
-                $"{VehicleColor.Brown}\n"
-            );
+            VehicleColor vehicleColor = GetVehicleColor("What color is the vehicle?");
 
             int numberOfWheels = UIService.GetValidInteger("How many wheels does the vehicle have?");
 
-            VehicleType vehicleType = UIService.GetValidEnumValue<VehicleType>
-            (
-                "What kind of vehicle is it?\n" +
-                "Choices:\n" +
-                $"{VehicleType.Airplane}\n" +
-                $"{VehicleType.Boat}\n" +
-                $"{VehicleType.Bus}\n" +
-                $"{VehicleType.Car}\n" +
-                $"{VehicleType.Motorcycle}\n"
-            );
+            VehicleType vehicleType = GetVehicleType("What kind of vehicle is it?");
 
-            Vehicle? vehicle;
+            Vehicle ? vehicle;
 
             switch (vehicleType)
             {
@@ -134,6 +113,77 @@ namespace GarageApplication
                     break;
             }
             return vehicle;
+        }
+
+        public static VehicleColor GetVehicleColor(string prompt)
+        {
+            return UIService.GetValidEnumValue<VehicleColor>
+             (
+                $"{prompt}" + "\n" +
+                "Choices:\n" +
+                $"{VehicleColor.Red}\n" +
+                $"{VehicleColor.Blue}\n" +
+                $"{VehicleColor.Black}\n" +
+                $"{VehicleColor.White}\n" +
+                $"{VehicleColor.Gray}\n" +
+                $"{VehicleColor.Silver}\n" +
+                $"{VehicleColor.Yellow}\n" +
+                $"{VehicleColor.Orange}\n" +
+                $"{VehicleColor.Brown}\n"
+            );
+        }
+
+        public static VehicleType GetVehicleType(string prompt)
+        {
+            return UIService.GetValidEnumValue<VehicleType>
+            (
+                $"{prompt}" + "\n" +
+                "Choices:\n" +
+                $"{VehicleType.Airplane}\n" +
+                $"{VehicleType.Boat}\n" +
+                $"{VehicleType.Bus}\n" +
+                $"{VehicleType.Car}\n" +
+                $"{VehicleType.Motorcycle}\n"
+            );
+        }
+
+        internal static int GetValidMenuChoice(int choices)
+        {
+            int answer = 0;
+            bool running = true;
+            while (running)
+            {
+                answer = GetValidInteger("Type in an answer 1-" + choices);
+                if (answer < 0 || answer > choices)
+                    Console.WriteLine("You did not put in a valid choice, try again");
+                else
+                    running = false;
+            }
+
+
+            return answer;
+        }
+
+        internal static string GetValidRegistrationNumber()
+        {
+            var regex = new Regex(@"^[A-Z]{3}[0-9]{3}$");
+            string input = "";
+
+
+            bool running = true;
+            while (running)
+            {
+                input = GetValidString("Type in a registration number");
+
+                if (regex.IsMatch(input.ToUpper()))
+                    running = false;
+                else
+                    Console.WriteLine("You did not put in a valid registration number, try again");
+
+
+            }
+
+            return input;
         }
     }
 }
