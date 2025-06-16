@@ -78,11 +78,9 @@ namespace GarageApplication
 
         private void AddOrRemoveVehicle()
         {
-            UI.PrintAddOrRemoveMenu();
-            int answer = UIService.GetValidMenuChoice(2);
-            Vehicle vehicle = UI.CreateVehicle()!;
-            if (answer == 1)
-            {             
+            var (vehicleAction, vehicle) = UI.AddOrRemoveCreatedVehicle();
+            if (vehicleAction == VehicleAction.Add)
+            {
                 Handler!.ParkVehicle(vehicle);
             }
             else
@@ -95,7 +93,7 @@ namespace GarageApplication
         private void ParkedByRegistration()
         {
             string registrationNumber = UIService.GetValidRegistrationNumber();
-            bool isParked = Handler.isParkedVehicleByRegistration(registrationNumber);
+            bool isParked = Handler.IsParkedVehicleByRegistration(registrationNumber);
             if (isParked)
             {
                 UI.printVehicleIsNotInGarage();

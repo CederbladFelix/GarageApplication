@@ -18,14 +18,6 @@ namespace GarageApplication
         public bool ParkVehicle(Vehicle vehicle) => _garage.ParkVehicle(vehicle);
         public bool UnparkVehicle(Vehicle vehicle) => _garage.UnparkVehicle(vehicle);
 
-        public bool isParkedVehicleByRegistration(string registrationNumber)
-        {
-            Vehicle? vehicle = _garage.FirstOrDefault(v => v.RegistrationNumber == registrationNumber.ToUpper());
-            if (vehicle == null)
-                return false;
-            else
-                return true;
-        }
 
         public void ListVehicles()
         {
@@ -39,18 +31,32 @@ namespace GarageApplication
                 Console.WriteLine(item);
             }
         }
-
         public void PrintCountByVehicleType()
         {
-            Dictionary<string, int> dictionary = _garage
-                .GroupBy(v => v.GetType().Name)
-                .ToDictionary(v => v.Key, v => v.Count());
+            Dictionary<string, int> dictionary = GroupByVehicleType();
 
             foreach (var vehicleCount in dictionary)
             {
                 Console.WriteLine($"{vehicleCount.Key}: {vehicleCount.Value}");
             }
         }
+
+        private Dictionary<string, int> GroupByVehicleType()
+        {
+            return _garage
+                .GroupBy(v => v.GetType().Name)
+                .ToDictionary(v => v.Key, v => v.Count());
+        }
+
+        public bool IsParkedVehicleByRegistration(string registrationNumber)
+        {
+            Vehicle? vehicle = _garage.FirstOrDefault(v => v.RegistrationNumber == registrationNumber.ToUpper());
+            if (vehicle == null)
+                return false;
+            else
+                return true;
+        }
+
 
         public void PrintVehiclesByProperty(
             VehicleType? vehicleType = null,

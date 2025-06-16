@@ -28,22 +28,13 @@ namespace GarageApplication
                                 "0. Exit the application");
         }
 
-
-        public void PrintVehicleTypeAndCount(Dictionary<string, int> dictionary)
+        public (VehicleAction, Vehicle) AddOrRemoveCreatedVehicle()
         {
-            if (dictionary == null || dictionary.Count == 0)
-            {
-                Console.WriteLine("The garage is empty.");
-                return;
-            }
+            VehicleAction answer = UIService.GetValidEnumValue<VehicleAction>("Write <Add> to add Vehicle\n" +
+                                                                                "Write <Remove> to remove Vehicle");
+            Vehicle vehicle = CreateVehicle()!;
 
-
-        }
-
-        public void PrintAddOrRemoveMenu()
-        {
-            Console.WriteLine("1. Add Vehicle\n" +
-                    "2. Remove Vehicle");
+            return (answer, vehicle);
         }
 
         public void printVehicleIsNotInGarage()
@@ -75,12 +66,12 @@ namespace GarageApplication
 
             if (choices.Contains("1"))
             {
-                vehicleType = UIService.GetVehicleType("What kind of vehicle is it?");
+                vehicleType = GetVehicleType("What kind of vehicle is it?");
             }
 
             if (choices.Contains("2"))
             {
-                vehicleColor = UIService.GetVehicleColor("What color is the vehicle?");
+                vehicleColor = GetVehicleColor("What color is the vehicle?");
             }
 
             if (choices.Contains("3"))
