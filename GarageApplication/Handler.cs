@@ -7,42 +7,67 @@ using System.Threading.Tasks;
 
 namespace GarageApplication
 {
-    internal class Handler
+    internal class Handler : IHandler
     {
-        private Garage<Vehicle> _garage;
+        private IGarage<Vehicle> _garage;
 
-        public Garage<Vehicle> Garage {  get { return _garage; } }
-
-        public Handler(int capacity, Vehicle[]? vehicles)
+        public Handler(IGarage<Vehicle> garage)
         {
-            _garage = new Garage<Vehicle>(capacity, vehicles);
+            _garage = garage;
+        }
+        public bool ParkVehicle(Vehicle vehicle) => _garage.ParkVehicle(vehicle);
+        public bool UnparkVehicle(Vehicle vehicle) => _garage.UnparkVehicle(vehicle);
+
+        public bool isParkedVehicleByRegistration(string registrationNumber)
+        {
+            Vehicle? vehicle = _garage.FirstOrDefault(v => v.RegistrationNumber == registrationNumber.ToUpper());
+            if (vehicle == null)
+                return false;
+            else
+                return true;
         }
 
-        public Vehicle? GetVehicleByRegistration(string registrationNumber)
+        public void ListVehicles()
         {
-            return _garage.FirstOrDefault(v => v.RegistrationNumber == registrationNumber);
+            if (!_garage.Any())
+            {
+                Console.WriteLine("The garage is empty.");
+                return;
+            }
+            foreach (var item in _garage)
+            {
+                Console.WriteLine(item);
+            }
         }
 
-        public void ParkVehicle(Vehicle vehicle) => _garage.ParkVehicle(vehicle);
-        public void UnparkVehicle(Vehicle vehicle) => _garage.UnparkVehicle(vehicle);
-
-        public Dictionary<string, int> GetCountByVehicleType()
+        public void PrintCountByVehicleType()
         {
-            return _garage
+            Dictionary<string, int> dictionary = _garage
                 .GroupBy(v => v.GetType().Name)
                 .ToDictionary(v => v.Key, v => v.Count());
+
+            foreach (var vehicleCount in dictionary)
+            {
+                Console.WriteLine($"{vehicleCount.Key}: {vehicleCount.Value}");
+            }
         }
 
-        public IEnumerable<Vehicle>? GetVehiclesByProperty(
-            VehicleType? type = null,
-            VehicleColor? color = null,
+        public void PrintVehiclesByProperty(
+            VehicleType? vehicleType = null,
+            VehicleColor? vehicleColor = null,
             int? numberOfWheels = null)
         {
-            return _garage
+            List<Vehicle> list = _garage
                 .Where(v =>
-                    (type == null || v.Type == type) &&
-                    (color == null || v.Color == color) &&
-                    (numberOfWheels == null || v.NumberOfWheels == numberOfWheels));
+                    (vehicleType == null || v.Type == vehicleType) &&
+                    (vehicleColor == null || v.Color == vehicleColor) &&
+                    (numberOfWheels == null || v.NumberOfWheels == numberOfWheels))
+                .ToList();
+
+            foreach (var vehicle in list)
+            {
+                Console.WriteLine(vehicle);
+            }
         }
     }
 }

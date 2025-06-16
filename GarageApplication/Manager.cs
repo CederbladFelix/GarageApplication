@@ -9,11 +9,14 @@ namespace GarageApplication
 {
     internal class Manager
     {
-        public Handler? Handler { get; set; }
-        public UI UI { get; set; }
-        public Manager(UI ui)
+        private readonly IHandler Handler;
+        private readonly IUIService UIService;
+        private readonly IUI UI;
+        public Manager(IUI ui, IHandler handler, IUIService uIService)
         {
             UI = ui;
+            Handler = handler;
+            UIService = uIService;
         }
         public void Application()
         {
@@ -24,9 +27,7 @@ namespace GarageApplication
         }
         private void Initialize()
         {
-            int garageSize = UI.AskForGarageSize();
-            Vehicle[]? vehicles = UI.AskForAlreadyParkedVehicles();
-            Handler = new Handler(garageSize, vehicles);
+
         }
         private void Run()
         {
@@ -42,18 +43,23 @@ namespace GarageApplication
                         running = false;
                         break;
                     case MainMenuChoice.ListParkedVehicles:
+                        Console.Clear();
                         ListParkedVehicles();
                         break;
                     case MainMenuChoice.NumberTheVehiclesOfAType:
+                        Console.Clear();
                         NumberTheVehiclesOfAType();
                         break;
                     case MainMenuChoice.AddOrRemoveVehicle:
+                        Console.Clear();
                         AddOrRemoveVehicle();
                         break;
                     case MainMenuChoice.ParkedByRegistration:
+                        Console.Clear();
                         ParkedByRegistration();
                         break;
                     case MainMenuChoice.SearchByQuality:
+                        Console.Clear();
                         SearchByQuality();
                         break;
                 }
@@ -62,22 +68,21 @@ namespace GarageApplication
         }
         private void Shutdown()
         {
-            throw new NotImplementedException();
+            
         }
 
-        private void ListParkedVehicles() => UI.PrintVehiclesInGarage(Handler!.Garage);
+        private void ListParkedVehicles() => Handler.ListVehicles();
 
-        private void NumberTheVehiclesOfAType() => UI.PrintVehicleTypeAndCount(Handler!.GetCountByVehicleType());
+        private void NumberTheVehiclesOfAType() => Handler.PrintCountByVehicleType();
 
 
         private void AddOrRemoveVehicle()
         {
             UI.PrintAddOrRemoveMenu();
             int answer = UIService.GetValidMenuChoice(2);
-            Vehicle vehicle = UIService.CreateVehicle()!;
+            Vehicle vehicle = UI.CreateVehicle()!;
             if (answer == 1)
-            {
-                
+            {             
                 Handler!.ParkVehicle(vehicle);
             }
             else
@@ -90,30 +95,21 @@ namespace GarageApplication
         private void ParkedByRegistration()
         {
             string registrationNumber = UIService.GetValidRegistrationNumber();
-            Vehicle? vehicle = Handler!.GetVehicleByRegistration(registrationNumber);
-            if (vehicle == null)
+            bool isParked = Handler.isParkedVehicleByRegistration(registrationNumber);
+            if (isParked)
             {
                 UI.printVehicleIsNotInGarage();
             }
             else
             {
-                UI.printVehicleIsInGarage(vehicle);
+                UI.printVehicleIsInGarage();
             }
         }
 
         private void SearchByQuality()
         {
             var (vehicleType, vehicleColor, numberOfWheels) = UI.GetPropertiesToSearchBy();
-            IEnumerable<Vehicle>? vehicleSequence = Handler!.GetVehiclesByProperty(vehicleType, vehicleColor, numberOfWheels);
-
-            if (vehicleSequence == null)
-            {
-                UI.PrintNoVehiclesFoundByProperty();
-            }
-            else
-            {
-                UI.PrintVehiclesByProperty(vehicleSequence);
-            }
+            Handler.PrintVehiclesByProperty(vehicleType, vehicleColor, numberOfWheels);
 
         }
 

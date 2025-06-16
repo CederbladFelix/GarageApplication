@@ -10,29 +10,15 @@ using System.Threading.Tasks;
 
 namespace GarageApplication
 {
-    internal class Garage<T> : IEnumerable<T> where T : Vehicle
+    internal class Garage<T> : IEnumerable<T>, IGarage<T> where T : Vehicle
     {
         private T?[] _vehicles;
         public int Capacity => _vehicles.Length;
 
 
-        public Garage(int capacity, T[]? vehicles = null)
+        public Garage(int capacity)
         {
-            if (capacity <= 0)
-                throw new ArgumentException("A garage needs space for vehicles, capacity must be greater than 0.");
-
             _vehicles = new T[capacity];
-
-            if (vehicles != null)
-            {
-                if (vehicles.Length > capacity)
-                    throw new ArgumentException("Provided vehicles exceed garage capacity.");
-
-                for (int i = 0; i < vehicles.Length; i++)
-                {
-                    _vehicles[i] = vehicles[i];
-                }
-            }
         }
 
         public bool ParkVehicle(T vehicle)

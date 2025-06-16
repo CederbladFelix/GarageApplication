@@ -9,10 +9,14 @@ namespace GarageApplication
     {
         static void Main(string[] args)
         {
+
             var host = Host.CreateDefaultBuilder(args)
                 .ConfigureServices(services =>
                 {
-                    services.AddSingleton<UI>();
+                    services.AddSingleton<IUI, UI>();
+                    services.AddSingleton<IGarage<Vehicle>>(provider => new Garage<Vehicle>(10));
+                    services.AddSingleton<IHandler, Handler>();
+                    services.AddSingleton<IUIService, UIService>();
                     services.AddSingleton<Manager>();
                 })
                 .UseConsoleLifetime()

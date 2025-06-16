@@ -8,10 +8,16 @@ using System.Threading.Tasks;
 
 namespace GarageApplication
 {
-    internal class UI
+    internal class UI : IUI
     {
+        public IUIService UIService { get; }
 
-        internal void PrintMainMenu()
+        public UI(IUIService uIService)
+        {
+            UIService = uIService;
+        }
+
+        public void PrintMainMenu()
         {
             Console.WriteLine("Welcome to garage app v1.0");
             Console.WriteLine("1. List parked vehicles\n" +
@@ -22,39 +28,8 @@ namespace GarageApplication
                                 "0. Exit the application");
         }
 
-        internal Vehicle[]? AskForAlreadyParkedVehicles()
-        {
 
-            int numberOfParkedVehicles = UIService.GetValidInteger("How many vehicles are parked");
-            Vehicle[] vehicles = new Vehicle[numberOfParkedVehicles];
-
-            for (int i = 0; i < numberOfParkedVehicles; i++)
-            {
-                vehicles[i] = UIService.CreateVehicle()!;
-            }
-            return vehicles;
-        }
-
-        internal int AskForGarageSize()
-        {
-            return UIService.GetValidInteger("How big is the garage?");
-        }
-
-        internal void PrintVehiclesInGarage(IEnumerable<Vehicle> vehiclesInGarage)
-        {
-            if (!vehiclesInGarage.Any())
-            {
-                Console.WriteLine("The garage is empty.");
-                return;
-            }
-
-            foreach (var vehicle in vehiclesInGarage)
-            {
-                Console.WriteLine(vehicle);
-            }
-        }
-
-        internal void PrintVehicleTypeAndCount(Dictionary<string, int> dictionary)
+        public void PrintVehicleTypeAndCount(Dictionary<string, int> dictionary)
         {
             if (dictionary == null || dictionary.Count == 0)
             {
@@ -62,55 +37,53 @@ namespace GarageApplication
                 return;
             }
 
-            foreach (var vehicleCount in dictionary)
-            {
-                Console.WriteLine($"{vehicleCount.Key}: {vehicleCount.Value}");
-            }
+
         }
 
-        internal void PrintAddOrRemoveMenu()
+        public void PrintAddOrRemoveMenu()
         {
             Console.WriteLine("1. Add Vehicle\n" +
-                    "2. Remove Vehicle");  
-
+                    "2. Remove Vehicle");
         }
 
-        internal void printVehicleIsNotInGarage()
+        public void printVehicleIsNotInGarage()
         {
             Console.WriteLine("Vehicle is not in the garage");
         }
 
-        internal void printVehicleIsInGarage(Vehicle vehicle)
+        public void printVehicleIsInGarage()
         {
-            Console.WriteLine($"{vehicle} is in the garage");
+            Console.WriteLine($"Vehicle is in the garage");
         }
 
-        internal (VehicleType? type, VehicleColor? color, int? wheels) GetPropertiesToSearchBy()
+        public (VehicleType? type, VehicleColor? color, int? wheels) GetPropertiesToSearchBy()
         {
             VehicleType? vehicleType = null;
             VehicleColor? vehicleColor = null;
             int? numberOfWheels = null;
 
-            Console.WriteLine("Do you want to search by vehicle type? Type 1");
-            string typeInput = Console.ReadLine();
+            Console.WriteLine("Select filters to apply:");
+            Console.WriteLine("1. Vehicle type");
+            Console.WriteLine("2. Vehicle color");
+            Console.WriteLine("3. Number of wheels");
+            Console.WriteLine("Enter numbers separated by commas, for example 1,3):");
 
-            if (typeInput == "1")
+            string input = Console.ReadLine()?.Trim() ?? "";
+            var choices = input
+                .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .ToHashSet();
+
+            if (choices.Contains("1"))
             {
-                VehicleType type = UIService.GetVehicleType("What kind of vehicle is it?");
+                vehicleType = UIService.GetVehicleType("What kind of vehicle is it?");
             }
 
-            Console.WriteLine("Do you want to search by Color type? Type 1");
-            string colorInput = Console.ReadLine();
-
-            if (colorInput == "1")
+            if (choices.Contains("2"))
             {
-                VehicleColor type = UIService.GetVehicleColor("What Color is the vehicle?");
+                vehicleColor = UIService.GetVehicleColor("What color is the vehicle?");
             }
 
-            Console.WriteLine("Do you want to search by how many wheels the vehicle has? Type 1");
-            string wheelInput = Console.ReadLine();
-
-            if (wheelInput == "1")
+            if (choices.Contains("3"))
             {
                 numberOfWheels = UIService.GetValidInteger("How many wheels does the vehicle have?");
             }
@@ -118,17 +91,103 @@ namespace GarageApplication
             return (vehicleType, vehicleColor, numberOfWheels);
         }
 
-        internal void PrintNoVehiclesFoundByProperty()
+
+        public void PrintNoVehiclesFoundByProperty()
         {
             Console.WriteLine("No vehicles was found in the garage with those properties");
         }
 
-        internal void PrintVehiclesByProperty(IEnumerable<Vehicle> vehicleSequence)
+        public void PrintVehiclesByProperty(IEnumerable<Vehicle> vehicleSequence)
         {
             foreach (var item in vehicleSequence)
             {
                 Console.WriteLine(item);
             }
+        }
+
+        public Vehicle? CreateVehicle()
+        {
+            VehicleColor vehicleColor = GetVehicleColor("What color is the vehicle?");
+
+            int numberOfWheels = UIService.GetValidInteger("How many wheels does the vehicle have?");
+
+            VehicleType vehicleType = GetVehicleType("What kind of vehicle is it?");
+
+            Vehicle? vehicle;
+
+            switch (vehicleType)
+            {
+                case VehicleType.Airplane:
+                    int numberOfEngines = UIService.GetValidInteger("How many engines does the airplane have?");
+                    vehicle = new Airplane(vehicleColor, numberOfWheels, numberOfEngines);
+                    break;
+
+                case VehicleType.Boat:
+                    int length = UIService.GetValidInteger("What is the length of the boat?");
+                    vehicle = new Boat(vehicleColor, numberOfWheels, length);
+                    break;
+
+                case VehicleType.Bus:
+                    FuelType fuelType = UIService.GetValidEnumValue<FuelType>
+                     (
+                        "What fuel type does the bus have?\n" +
+                        "Choices:\n" +
+                        $"{FuelType.Petrol}\n" +
+                        $"{FuelType.Diesel}\n" +
+                        $"{FuelType.Electric}\n"
+                    );
+                    vehicle = new Bus(vehicleColor, numberOfWheels, fuelType);
+                    break;
+
+                case VehicleType.Car:
+                    int numberOfSeats = UIService.GetValidInteger("How many seats does the car have?");
+                    vehicle = new Car(vehicleColor, numberOfWheels, numberOfSeats);
+                    break;
+
+                case VehicleType.Motorcycle:
+                    int cylinderVolume = UIService.GetValidInteger("What is the cylinder volume of the motorcycle?");
+                    vehicle = new Motorcycle(vehicleColor, numberOfWheels, cylinderVolume);
+                    break;
+
+                default:
+                    vehicle = null;
+                    break;
+            }
+            Console.WriteLine("A vehicle has been created");
+            Console.WriteLine(vehicle);
+            return vehicle;
+        }
+
+        public VehicleColor GetVehicleColor(string prompt)
+        {
+            return UIService.GetValidEnumValue<VehicleColor>
+             (
+                $"{prompt}" + "\n" +
+                "Choices:\n" +
+                $"{VehicleColor.Red}\n" +
+                $"{VehicleColor.Blue}\n" +
+                $"{VehicleColor.Black}\n" +
+                $"{VehicleColor.White}\n" +
+                $"{VehicleColor.Gray}\n" +
+                $"{VehicleColor.Silver}\n" +
+                $"{VehicleColor.Yellow}\n" +
+                $"{VehicleColor.Orange}\n" +
+                $"{VehicleColor.Brown}"
+            );
+        }
+
+        public VehicleType GetVehicleType(string prompt)
+        {
+            return UIService.GetValidEnumValue<VehicleType>
+            (
+                $"{prompt}" + "\n" +
+                "Choices:\n" +
+                $"{VehicleType.Airplane}\n" +
+                $"{VehicleType.Boat}\n" +
+                $"{VehicleType.Bus}\n" +
+                $"{VehicleType.Car}\n" +
+                $"{VehicleType.Motorcycle}"
+            );
         }
     }
 }
