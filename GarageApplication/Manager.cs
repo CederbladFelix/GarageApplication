@@ -39,9 +39,6 @@ namespace GarageApplication
 
                 switch (answer)
                 {
-                    case MainMenuChoice.Exit:
-                        running = false;
-                        break;
                     case MainMenuChoice.ListParkedVehicles:
                         ListParkedVehicles();
                         break;
@@ -56,6 +53,12 @@ namespace GarageApplication
                         break;
                     case MainMenuChoice.SearchByQuality:
                         SearchByQuality();
+                        break;
+                    case MainMenuChoice.Exit:
+                        running = false;
+                        break;
+                    default:
+                        Console.WriteLine("You did not enter a valid menu choice.");
                         break;
                 }
             }
@@ -80,6 +83,7 @@ namespace GarageApplication
             {
                 Vehicle vehicle = UI.CreateVehicle()!;
                 Handler.ParkVehicle(vehicle);
+                Console.WriteLine("The vehicle has been parked");
             }
             else
             {
@@ -88,8 +92,12 @@ namespace GarageApplication
                 {
                     string registrationNumber = UIService.GetValidRegistrationNumber();
                     Vehicle? vehicle = Handler.IsParkedVehicleByRegistration(registrationNumber);
-                    if (vehicle != null) 
+                    if (vehicle != null)
+                    {
                         Handler.UnparkVehicle(vehicle);
+                        Console.WriteLine("The vehicle has been removed");
+
+                    }
                     else
                         Console.WriteLine("There is no parked car with that registration number");
                 }

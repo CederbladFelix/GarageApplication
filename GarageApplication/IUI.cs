@@ -4,8 +4,6 @@ namespace GarageApplication
 {
     internal interface IUI
     {
-        IUIService UIService { get; }
-
         Vehicle? CreateVehicle();
         VehicleAction GetAddOrRemoveVehicleChoice();
         (VehicleType? type, VehicleColor? color, int? wheels) GetPropertiesToSearchBy();

@@ -10,7 +10,7 @@ namespace GarageApplication
 {
     internal class UI : IUI
     {
-        public IUIService UIService { get; }
+        private readonly IUIService UIService;
 
         public UI(IUIService uIService)
         {
@@ -25,7 +25,7 @@ namespace GarageApplication
                                 "3. Add or Remove vehicles from the garage\n" +
                                 "4. See if a vehicle is parked by registration\n" +
                                 "5. List vehicles with certain qualities\n" +
-                                "0. Exit the application");
+                                "6. Exit the application");
         }
 
         public VehicleAction GetAddOrRemoveVehicleChoice()
@@ -130,7 +130,7 @@ namespace GarageApplication
                     vehicle = null;
                     break;
             }
-            Console.WriteLine("A vehicle has been created");
+            Console.WriteLine("A vehicle has been registerd");
             Console.WriteLine(vehicle);
             return vehicle;
         }

@@ -9,7 +9,7 @@ namespace GarageApplication
 {
     internal class Handler : IHandler
     {
-        private IGarage<Vehicle> _garage;
+        private readonly IGarage<Vehicle> _garage;
 
         public Handler(IGarage<Vehicle> garage)
         {
