@@ -1,11 +1,11 @@
 ﻿using GarageApplication.Vehicles;
 
-namespace GarageApplication
+namespace GarageApplication.Garage
 {
-    internal interface IHandler
+    public interface IHandler
     {
         bool IsGarageEmpty();
-        Vehicle? IsParkedVehicleByRegistration(string registrationNumber);
+        Vehicle? GetParkedVehicleByRegistration(string registrationNumber);
         void ListVehicles();
         bool ParkVehicle(Vehicle vehicle);
         void PrintCountByVehicleType();

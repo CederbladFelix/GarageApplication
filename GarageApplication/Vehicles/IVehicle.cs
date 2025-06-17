@@ -1,6 +1,6 @@
 ﻿namespace GarageApplication.Vehicles
 {
-    internal interface IVehicle
+    public interface IVehicle
     {
         VehicleColor Color { get; }
         int NumberOfWheels { get; }

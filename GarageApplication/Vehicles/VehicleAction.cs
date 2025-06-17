@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GarageApplication.Vehicles
 {
-    internal enum VehicleAction
+    public enum VehicleAction
     {
         Add, 
         Remove

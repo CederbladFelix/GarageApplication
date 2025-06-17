@@ -1,9 +1,11 @@
-﻿using GarageApplication.Vehicles;
+﻿using GarageApplication.Garage;
+using GarageApplication.UserInterface;
+using GarageApplication.Vehicles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace GarageApplication
+namespace GarageApplication.Application
 {
     internal class Program
     {

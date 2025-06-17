@@ -1,13 +1,15 @@
-﻿using GarageApplication.Vehicles;
+﻿using GarageApplication.Garage;
+using GarageApplication.UserInterface;
+using GarageApplication.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GarageApplication
+namespace GarageApplication.Application
 {
-    internal class Manager
+    public class Manager
     {
         private readonly IHandler Handler;
         private readonly IUIService UIService;
@@ -82,8 +84,11 @@ namespace GarageApplication
             if (vehicleAction == VehicleAction.Add)
             {
                 Vehicle vehicle = UI.CreateVehicle()!;
-                Handler.ParkVehicle(vehicle);
-                Console.WriteLine("The vehicle has been parked");
+                bool isParked = Handler.ParkVehicle(vehicle);
+                if (isParked)
+                    Console.WriteLine("The vehicle has been parked");
+                else
+                    Console.WriteLine("The vehicle could not be parked");
             }
             else
             {
@@ -91,11 +96,15 @@ namespace GarageApplication
                 if (!Handler.IsGarageEmpty())
                 {
                     string registrationNumber = UIService.GetValidRegistrationNumber();
-                    Vehicle? vehicle = Handler.IsParkedVehicleByRegistration(registrationNumber);
+                    Vehicle? vehicle = Handler.GetParkedVehicleByRegistration(registrationNumber);
                     if (vehicle != null)
                     {
-                        Handler.UnparkVehicle(vehicle);
-                        Console.WriteLine("The vehicle has been removed");
+                        bool isUnparked = Handler.UnparkVehicle(vehicle);
+
+                        if (isUnparked)
+                            Console.WriteLine("The vehicle has been removed");
+                        else
+                            Console.WriteLine("The vehicle could not be unparked");
 
                     }
                     else
@@ -110,7 +119,7 @@ namespace GarageApplication
         private void ParkedByRegistration()
         {
             string registrationNumber = UIService.GetValidRegistrationNumber();
-            Vehicle? vehicle = Handler.IsParkedVehicleByRegistration(registrationNumber);
+            Vehicle? vehicle = Handler.GetParkedVehicleByRegistration(registrationNumber);
             if (vehicle == null)
             {
                 UI.printVehicleIsNotInGarage();

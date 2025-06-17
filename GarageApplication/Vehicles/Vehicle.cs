@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GarageApplication.Vehicles
 {
-    internal abstract class Vehicle : IVehicle
+    public abstract class Vehicle : IVehicle
     {
         private static HashSet<string> _usedRegistrationNumbers = new();
         private static readonly Random _random = new();

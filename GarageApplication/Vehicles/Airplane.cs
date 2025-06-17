@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GarageApplication.Vehicles
 {
-    internal class Airplane : Vehicle
+    public class Airplane : Vehicle
     {
         public int NumberOfEngines { get; }
         public Airplane(VehicleColor color, int numberOfWheels, int numberOfEngines) : base(VehicleType.Airplane, color, numberOfWheels)

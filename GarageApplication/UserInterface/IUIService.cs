@@ -1,7 +1,7 @@
 ﻿
 namespace GarageApplication
 {
-    internal interface IUIService
+    public interface IUIService
     {
         T GetValidEnumValue<T>(string prompt) where T : struct, Enum;
         int GetValidInteger(string prompt);

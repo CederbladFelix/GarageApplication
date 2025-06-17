@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GarageApplication
+namespace GarageApplication.Garage
 {
-    internal class Handler : IHandler
+    public class Handler : IHandler
     {
         private readonly IGarage<Vehicle> _garage;
 
@@ -60,7 +60,7 @@ namespace GarageApplication
                 .ToDictionary(v => v.Key, v => v.Count());
         }
 
-        public Vehicle? IsParkedVehicleByRegistration(string registrationNumber)
+        public Vehicle? GetParkedVehicleByRegistration(string registrationNumber)
         {
             Vehicle? vehicle = _garage.FirstOrDefault(v => v.RegistrationNumber == registrationNumber.ToUpper());
             if (vehicle == null)

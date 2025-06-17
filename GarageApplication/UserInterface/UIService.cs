@@ -7,9 +7,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace GarageApplication
+namespace GarageApplication.UserInterface
 {
-    internal class UIService : IUIService
+    public class UIService : IUIService
     {
         public int GetValidInteger(string prompt)
         {

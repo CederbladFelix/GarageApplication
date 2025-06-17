@@ -1,8 +1,8 @@
 ﻿using GarageApplication.Vehicles;
 
-namespace GarageApplication
+namespace GarageApplication.UserInterface
 {
-    internal interface IUI
+    public interface IUI
     {
         Vehicle? CreateVehicle();
         VehicleAction GetAddOrRemoveVehicleChoice();

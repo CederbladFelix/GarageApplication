@@ -1,12 +1,11 @@
 ﻿using GarageApplication.Vehicles;
 
-namespace GarageApplication
+namespace GarageApplication.Garage
 {
-    internal interface IGarage<T>: IEnumerable<T> where T : Vehicle
+    public interface IGarage<T>: IEnumerable<T> where T : Vehicle
     {
         int Capacity { get; }
 
-        IEnumerator<T> GetEnumerator();
         bool ParkVehicle(T vehicle);
         bool UnparkVehicle(T vehicle);
     }

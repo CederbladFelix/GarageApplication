@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GarageApplication
+namespace GarageApplication.UserInterface
 {
-    internal class UI : IUI
+    public class UI : IUI
     {
         private readonly IUIService UIService;
 

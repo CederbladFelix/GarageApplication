@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GarageApplication
+namespace GarageApplication.Application
 {
-    internal class MainMenuChoice
+    public class MainMenuChoice
     {
         public const int ListParkedVehicles = 1;
         public const int NumberTheVehiclesOfAType = 2;

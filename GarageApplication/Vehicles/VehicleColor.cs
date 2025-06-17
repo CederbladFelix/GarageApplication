@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GarageApplication.Vehicles
 {
-    internal enum VehicleColor
+    public enum VehicleColor
     {
         Red,
         Blue,
