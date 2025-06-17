@@ -84,10 +84,16 @@ namespace GarageApplication
             else
             {
                 ListParkedVehicles();
-                string registrationNumber = UIService.GetValidRegistrationNumber();
-                Vehicle? vehicle = Handler.IsParkedVehicleByRegistration(registrationNumber);
-                if (vehicle != null) 
-                    Handler.UnparkVehicle(vehicle);
+                if (!Handler.IsGarageEmpty())
+                {
+                    string registrationNumber = UIService.GetValidRegistrationNumber();
+                    Vehicle? vehicle = Handler.IsParkedVehicleByRegistration(registrationNumber);
+                    if (vehicle != null) 
+                        Handler.UnparkVehicle(vehicle);
+                    else
+                        Console.WriteLine("There is no parked car with that registration number");
+                }
+
 
             }
 

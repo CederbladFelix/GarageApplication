@@ -18,26 +18,38 @@ namespace GarageApplication
         public bool ParkVehicle(Vehicle vehicle) => _garage.ParkVehicle(vehicle);
         public bool UnparkVehicle(Vehicle vehicle) => _garage.UnparkVehicle(vehicle);
 
+        public bool IsGarageEmpty()
+        {
+            return !_garage.Any();
+        }
+
 
         public void ListVehicles()
         {
-            if (!_garage.Any())
-            {
+            if (IsGarageEmpty())
                 Console.WriteLine("The garage is empty.");
-                return;
-            }
-            foreach (var item in _garage)
+
+            else
             {
-                Console.WriteLine(item);
+                foreach (var item in _garage)
+                {
+                    Console.WriteLine(item);
+                }
             }
         }
         public void PrintCountByVehicleType()
         {
-            Dictionary<string, int> dictionary = GroupByVehicleType();
+            if (IsGarageEmpty())
+                Console.WriteLine("The garage is empty");
 
-            foreach (var vehicleCount in dictionary)
+            else
             {
-                Console.WriteLine($"{vehicleCount.Key}: {vehicleCount.Value}");
+                Dictionary<string, int> dictionary = GroupByVehicleType();
+
+                foreach (var vehicleCount in dictionary)
+                {
+                    Console.WriteLine($"{vehicleCount.Key}: {vehicleCount.Value}");
+                }
             }
         }
 
