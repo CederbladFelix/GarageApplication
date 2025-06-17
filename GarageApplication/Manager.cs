@@ -43,23 +43,18 @@ namespace GarageApplication
                         running = false;
                         break;
                     case MainMenuChoice.ListParkedVehicles:
-                        Console.Clear();
                         ListParkedVehicles();
                         break;
                     case MainMenuChoice.NumberTheVehiclesOfAType:
-                        Console.Clear();
                         NumberTheVehiclesOfAType();
                         break;
                     case MainMenuChoice.AddOrRemoveVehicle:
-                        Console.Clear();
                         AddOrRemoveVehicle();
                         break;
                     case MainMenuChoice.ParkedByRegistration:
-                        Console.Clear();
                         ParkedByRegistration();
                         break;
                     case MainMenuChoice.SearchByQuality:
-                        Console.Clear();
                         SearchByQuality();
                         break;
                 }
@@ -88,6 +83,7 @@ namespace GarageApplication
             }
             else
             {
+                ListParkedVehicles();
                 string registrationNumber = UIService.GetValidRegistrationNumber();
                 Vehicle? vehicle = Handler.IsParkedVehicleByRegistration(registrationNumber);
                 if (vehicle != null) 

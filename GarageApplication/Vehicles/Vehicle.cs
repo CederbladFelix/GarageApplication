@@ -17,9 +17,10 @@ namespace GarageApplication.Vehicles
         public VehicleType Type { get; }
         public VehicleColor Color { get; }
 
-        protected Vehicle(VehicleColor color, int numberOfWheels)
+        protected Vehicle(VehicleType type, VehicleColor color, int numberOfWheels)
         {
             RegistrationNumber = GenerateUniqueRegistrationNumber();
+            Type = type;
             Color = color;
             NumberOfWheels = numberOfWheels;
         }
