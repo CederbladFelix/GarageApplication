@@ -2,7 +2,7 @@
 
 namespace GarageApplication.Garage
 {
-    public interface IGarage<T>: IEnumerable<T> where T : Vehicle
+    public interface IGarage<T> : IEnumerable<T> where T : Vehicle
     {
         int Capacity { get; }
 

@@ -13,16 +13,24 @@ namespace GarageApplication.Garage
     public class Garage<T> : IEnumerable<T>, IGarage<T> where T : Vehicle
     {
         private T?[] _vehicles;
-        public int Capacity => _vehicles.Length;
+        public int Capacity { get; }
+
+        private int _count;
+
+        public bool isFull() => _count == Capacity;
 
 
         public Garage(int capacity)
         {
             _vehicles = new T[capacity];
+            Capacity = capacity;
         }
 
         public bool ParkVehicle(T vehicle)
         {
+            if (isFull())
+                return false;
+
             if (_vehicles.Any(v => v?.RegistrationNumber == vehicle.RegistrationNumber))
                 return false;
 
@@ -32,6 +40,7 @@ namespace GarageApplication.Garage
                 if (_vehicles[i] == null)
                 {
                     _vehicles[i] = vehicle;
+                    _count++;
                     return true;
                 }
             }
@@ -46,6 +55,7 @@ namespace GarageApplication.Garage
                     parkedVehicle.RegistrationNumber == vehicle.RegistrationNumber)
                 {
                     _vehicles[i] = null;
+                    _count--;
                     return true;
                 }
             }
