@@ -18,6 +18,7 @@ namespace GarageApplication.Garage
         private int _count;
 
         public bool isFull() => _count == Capacity;
+        public bool isEmpty() => _count == 0;
 
 
         public Garage(int capacity)
@@ -49,6 +50,9 @@ namespace GarageApplication.Garage
 
         public bool UnparkVehicle(T vehicle)
         {
+            if(isEmpty())
+                return false;
+
             for (int i = 0; i < _vehicles.Length; i++)
             {
                 if (_vehicles[i] is T parkedVehicle &&
