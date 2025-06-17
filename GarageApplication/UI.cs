@@ -28,14 +28,14 @@ namespace GarageApplication
                                 "0. Exit the application");
         }
 
-        public (VehicleAction, Vehicle) AddOrRemoveCreatedVehicle()
+        public VehicleAction GetAddOrRemoveVehicleChoice()
         {
             VehicleAction answer = UIService.GetValidEnumValue<VehicleAction>("Write <Add> to add Vehicle\n" +
                                                                                 "Write <Remove> to remove Vehicle");
-            Vehicle vehicle = CreateVehicle()!;
 
-            return (answer, vehicle);
+            return answer;
         }
+
 
         public void printVehicleIsNotInGarage()
         {
@@ -80,20 +80,6 @@ namespace GarageApplication
             }
 
             return (vehicleType, vehicleColor, numberOfWheels);
-        }
-
-
-        public void PrintNoVehiclesFoundByProperty()
-        {
-            Console.WriteLine("No vehicles was found in the garage with those properties");
-        }
-
-        public void PrintVehiclesByProperty(IEnumerable<Vehicle> vehicleSequence)
-        {
-            foreach (var item in vehicleSequence)
-            {
-                Console.WriteLine(item);
-            }
         }
 
         public Vehicle? CreateVehicle()

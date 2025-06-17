@@ -48,13 +48,13 @@ namespace GarageApplication
                 .ToDictionary(v => v.Key, v => v.Count());
         }
 
-        public bool IsParkedVehicleByRegistration(string registrationNumber)
+        public Vehicle? IsParkedVehicleByRegistration(string registrationNumber)
         {
             Vehicle? vehicle = _garage.FirstOrDefault(v => v.RegistrationNumber == registrationNumber.ToUpper());
             if (vehicle == null)
-                return false;
+                return vehicle;
             else
-                return true;
+                return vehicle;
         }
 
 
@@ -70,10 +70,17 @@ namespace GarageApplication
                     (numberOfWheels == null || v.NumberOfWheels == numberOfWheels))
                 .ToList();
 
-            foreach (var vehicle in list)
+            if (list.Count == 0)
+                Console.WriteLine("No vehicles was found in the garage with those properties");
+
+            else
             {
-                Console.WriteLine(vehicle);
+                foreach (var vehicle in list)
+                {
+                    Console.WriteLine(vehicle);
+                }
             }
+
         }
     }
 }

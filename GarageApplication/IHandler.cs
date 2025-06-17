@@ -4,7 +4,7 @@ namespace GarageApplication
 {
     internal interface IHandler
     {
-        bool IsParkedVehicleByRegistration(string registrationNumber);
+        Vehicle? IsParkedVehicleByRegistration(string registrationNumber);
         void ListVehicles();
         bool ParkVehicle(Vehicle vehicle);
         void PrintCountByVehicleType();

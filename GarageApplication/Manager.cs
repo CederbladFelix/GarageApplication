@@ -78,14 +78,21 @@ namespace GarageApplication
 
         private void AddOrRemoveVehicle()
         {
-            var (vehicleAction, vehicle) = UI.AddOrRemoveCreatedVehicle();
+
+            VehicleAction vehicleAction = UI.GetAddOrRemoveVehicleChoice();
+
             if (vehicleAction == VehicleAction.Add)
             {
-                Handler!.ParkVehicle(vehicle);
+                Vehicle vehicle = UI.CreateVehicle()!;
+                Handler.ParkVehicle(vehicle);
             }
             else
             {
-                Handler!.UnparkVehicle(vehicle);
+                string registrationNumber = UIService.GetValidRegistrationNumber();
+                Vehicle? vehicle = Handler.IsParkedVehicleByRegistration(registrationNumber);
+                if (vehicle != null) 
+                    Handler.UnparkVehicle(vehicle);
+
             }
 
         }
@@ -93,8 +100,8 @@ namespace GarageApplication
         private void ParkedByRegistration()
         {
             string registrationNumber = UIService.GetValidRegistrationNumber();
-            bool isParked = Handler.IsParkedVehicleByRegistration(registrationNumber);
-            if (isParked)
+            Vehicle? vehicle = Handler.IsParkedVehicleByRegistration(registrationNumber);
+            if (vehicle == null)
             {
                 UI.printVehicleIsNotInGarage();
             }
