@@ -1,5 +1,4 @@
-﻿
-namespace GarageApplication
+﻿namespace GarageApplication
 {
     public interface IUIService
     {

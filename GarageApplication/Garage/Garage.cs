@@ -1,12 +1,5 @@
 ﻿using GarageApplication.Vehicles;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GarageApplication.Garage
 {
@@ -15,7 +8,7 @@ namespace GarageApplication.Garage
         private T?[] _vehicles;
         public int Capacity { get; }
 
-        private int _count;
+        private int _count = 0;
 
         public bool isFull() => _count == Capacity;
         public bool isEmpty() => _count == 0;

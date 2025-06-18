@@ -4,7 +4,6 @@ using GarageApplication.Vehicles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Net.Quic;
 
 namespace GarageApplication.Application
 {
