@@ -7,6 +7,8 @@ namespace GarageApplication.Garage
         Vehicle? GetParkedVehicleByRegistration(string registrationNumber);
         bool IsGarageEmpty();
         bool IsGarageFull();
+        void SaveGarage();
+        void LoadGarage();
         int GetCapacity();
         void ListVehicles();
         bool ParkVehicle(Vehicle vehicle);

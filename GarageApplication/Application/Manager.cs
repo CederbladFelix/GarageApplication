@@ -24,6 +24,14 @@ namespace GarageApplication.Application
         }
         private void Initialize()
         {
+            Handler.LoadGarage();
+
+            if (!Handler.IsGarageEmpty())
+            {
+                Console.WriteLine("Garage loaded from file");
+                return;
+            }
+
             int capacity = Handler.GetCapacity();
             int numberOfCarsInGarage = UIService.GetValidInteger("How many cars are parked in the garage?\n" +
                                                                     $"The garages capacity is {capacity}");
@@ -80,6 +88,7 @@ namespace GarageApplication.Application
         }
         private void Shutdown()
         {
+            Handler.SaveGarage();
             Console.WriteLine("The application is now closing");
         }
 

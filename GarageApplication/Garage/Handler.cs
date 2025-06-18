@@ -5,10 +5,12 @@ namespace GarageApplication.Garage
     public class Handler : IHandler
     {
         private readonly IGarage<Vehicle> _garage;
+        private readonly IGarageStorage _garageStorage;
 
-        public Handler(IGarage<Vehicle> garage)
+        public Handler(IGarage<Vehicle> garage, IGarageStorage garageStorage)
         {
             _garage = garage;
+            _garageStorage = garageStorage;
         }
         public bool ParkVehicle(Vehicle vehicle) => _garage.ParkVehicle(vehicle);
         public bool UnparkVehicle(Vehicle vehicle) => _garage.UnparkVehicle(vehicle);
@@ -21,6 +23,23 @@ namespace GarageApplication.Garage
         {
             return _garage.isFull();
         }
+        
+        public void SaveGarage()
+        {
+            var vehicles = _garage.ToList();
+            _garageStorage.SaveGarage(vehicles);
+        }
+
+        public void LoadGarage()
+        {
+            var loadedVehicles = _garageStorage.LoadGarage();
+
+            foreach (var vehicle in loadedVehicles)
+            {
+                _garage.ParkVehicle(vehicle);
+            }
+        }
+
 
         public int GetCapacity() => _garage.Capacity;
 
