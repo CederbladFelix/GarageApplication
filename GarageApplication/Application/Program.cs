@@ -24,7 +24,7 @@ namespace GarageApplication.Application
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton<IUI, UI>();
-                    services.AddSingleton<IGarage<Vehicle>>(provider => new Garage<Vehicle>(config.GetValue<int>("garage:capacity")));
+                    services.AddSingleton<IGarage<Vehicle>>(_ => new Garage<Vehicle>(config.GetValue<int>("garage:capacity")));
                     services.AddSingleton<IHandler, Handler>();
                     services.AddSingleton<IUIService, UIService>();
                     services.AddSingleton<Manager>();

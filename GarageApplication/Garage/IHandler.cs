@@ -4,8 +4,10 @@ namespace GarageApplication.Garage
 {
     public interface IHandler
     {
-        bool IsGarageEmpty();
         Vehicle? GetParkedVehicleByRegistration(string registrationNumber);
+        bool IsGarageEmpty();
+        bool IsGarageFull();
+        int GetCapacity();
         void ListVehicles();
         bool ParkVehicle(Vehicle vehicle);
         void PrintCountByVehicleType();

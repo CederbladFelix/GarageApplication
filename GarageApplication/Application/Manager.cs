@@ -29,6 +29,23 @@ namespace GarageApplication.Application
         }
         private void Initialize()
         {
+            int capacity = Handler.GetCapacity();
+            int numberOfCarsInGarage = UIService.GetValidInteger("How many cars are parked in the garage?\n" +
+                                                                    $"The garages capacity is {capacity}");
+            Console.WriteLine();
+
+            if (numberOfCarsInGarage > Handler.GetCapacity())
+                Console.WriteLine($"Can't add that many cars to the garage");
+
+            else
+            {
+                for (int i = 0; i < numberOfCarsInGarage; i++)
+                {
+                    Vehicle vehicle = UI.CreateVehicle()!;
+                    Handler.ParkVehicle(vehicle);
+
+                }
+            }
 
         }
         private void Run()
@@ -68,7 +85,7 @@ namespace GarageApplication.Application
         }
         private void Shutdown()
         {
-            
+            Console.WriteLine("The application is now closing");
         }
 
         private void ListParkedVehicles() => Handler.ListVehicles();

@@ -49,7 +49,7 @@ namespace GarageApplication.Vehicles
 
         public override string ToString()
         {
-            return $"Type: {this.GetType().Name}, Registration number: {RegistrationNumber}, Color: {Color}";
+            return $"Type: {this.GetType().Name}, Registration number: {RegistrationNumber}, Color: {Color}, Number of Wheels: {NumberOfWheels}";
         }
     }
 

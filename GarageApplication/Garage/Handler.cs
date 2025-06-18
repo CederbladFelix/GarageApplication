@@ -20,8 +20,14 @@ namespace GarageApplication.Garage
 
         public bool IsGarageEmpty()
         {
-            return !_garage.Any();
+            return _garage.isEmpty();
         }
+        public bool IsGarageFull()
+        {
+            return _garage.isFull();
+        }
+
+        public int GetCapacity() => _garage.Capacity;
 
 
         public void ListVehicles()

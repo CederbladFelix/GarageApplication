@@ -50,7 +50,7 @@ namespace GarageApplication.Garage
 
         public bool UnparkVehicle(T vehicle)
         {
-            if(isEmpty())
+            if (isEmpty())
                 return false;
 
             for (int i = 0; i < _vehicles.Length; i++)

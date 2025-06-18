@@ -6,6 +6,8 @@ namespace GarageApplication.Garage
     {
         int Capacity { get; }
 
+        bool isEmpty();
+        bool isFull();
         bool ParkVehicle(T vehicle);
         bool UnparkVehicle(T vehicle);
     }

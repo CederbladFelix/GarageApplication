@@ -19,6 +19,8 @@ namespace GarageApplication.UserInterface
 
         public void PrintMainMenu()
         {
+            Console.WriteLine();
+            Console.WriteLine();
             Console.WriteLine("Welcome to garage app v1.0");
             Console.WriteLine("1. List parked vehicles\n" +
                                 "2. List type of vehicle and how many of them are parked\n" +
@@ -32,6 +34,7 @@ namespace GarageApplication.UserInterface
         {
             VehicleAction answer = UIService.GetValidEnumValue<VehicleAction>("Write <Add> to add Vehicle\n" +
                                                                                 "Write <Remove> to remove Vehicle");
+            Console.WriteLine();
 
             return answer;
         }
@@ -85,10 +88,17 @@ namespace GarageApplication.UserInterface
         public Vehicle? CreateVehicle()
         {
             VehicleColor vehicleColor = GetVehicleColor("What color is the vehicle?");
-
-            int numberOfWheels = UIService.GetValidInteger("How many wheels does the vehicle have?");
+            Console.WriteLine();
 
             VehicleType vehicleType = GetVehicleType("What kind of vehicle is it?");
+            Console.WriteLine();
+
+            int numberOfWheels = 0;
+            if (vehicleType != VehicleType.Boat)
+            {
+                numberOfWheels = UIService.GetValidInteger("How many wheels does the vehicle have?");
+                Console.WriteLine();
+            }
 
             Vehicle? vehicle;
 
@@ -111,7 +121,7 @@ namespace GarageApplication.UserInterface
                         "Choices:\n" +
                         $"{FuelType.Petrol}\n" +
                         $"{FuelType.Diesel}\n" +
-                        $"{FuelType.Electric}\n"
+                        $"{FuelType.Electric}"
                     );
                     vehicle = new Bus(vehicleColor, numberOfWheels, fuelType);
                     break;
@@ -132,6 +142,7 @@ namespace GarageApplication.UserInterface
             }
             Console.WriteLine("A vehicle has been registerd");
             Console.WriteLine(vehicle);
+            Console.WriteLine();
             return vehicle;
         }
 
