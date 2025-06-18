@@ -26,6 +26,33 @@ namespace GarageApplicationTests
             Assert.Equal(capacity, garage.Capacity);
 
         }
+
+        [Fact]
+        public void IsEmpty_Returns_True_When_Garage_Has_No_Vehicles()
+        {
+            // Arrange
+
+            // Act
+            bool result = garage.isEmpty();
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsFull_Returns_True_When_Garage_Is_At_Capacity()
+        {
+            // Arrange
+            garage.ParkVehicle(motorcycle);
+            garage.ParkVehicle(car);
+
+            // Act
+            bool result = garage.isFull();
+
+            // Assert
+            Assert.True(result);
+        }
+
         [Fact]
         public void ParkVehicle_Returns_True_When_Parking_Is_Successful()
         {
