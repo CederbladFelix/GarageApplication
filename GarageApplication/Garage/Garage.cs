@@ -6,19 +6,17 @@ namespace GarageApplication.Garage
     public class Garage<T> : IEnumerable<T>, IGarage<T> where T : Vehicle
     {
         private T?[] _vehicles;
-        public int Capacity { get; }
-
         private int _count = 0;
-
-        public bool isFull() => _count == Capacity;
-        public bool isEmpty() => _count == 0;
-
+        public int Capacity { get; }
 
         public Garage(int capacity)
         {
             _vehicles = new T[capacity];
             Capacity = capacity;
         }
+
+        public bool isFull() => _count == Capacity;
+        public bool isEmpty() => _count == 0;
 
         public bool ParkVehicle(T vehicle)
         {
